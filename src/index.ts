@@ -1,8 +1,6 @@
 import Fastify, { FastifyInstance, RouteShorthandOptions } from 'fastify'
-import { Server, IncomingMessage, ServerResponse } from 'http'
 
 const server: FastifyInstance = Fastify({})
-
 const opts: RouteShorthandOptions = {
   schema: {
     response: {
@@ -18,9 +16,9 @@ const opts: RouteShorthandOptions = {
   }
 }
 
-server.get('/ping', opts, async (request, reply) => {
-  return { pong: 'it worked!' }
-})
+server.get('/ping', opts, async (request, reply) =>
+  ({ pong: 'it worked!' })
+)
 
 const start = async () => {
   try {
@@ -30,6 +28,7 @@ const start = async () => {
     const port = typeof address === 'string' ? address : address?.port
   } catch (err) {
     server.log.error(err)
+
     process.exit(1)
   }
 }
